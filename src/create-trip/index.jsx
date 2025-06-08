@@ -13,6 +13,7 @@ import {
 } from "../components/ui/dialog"
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_GEMINI_AI_API_KEY);
   const model = genAI.getGenerativeModel({
@@ -46,7 +47,7 @@ const handleInputChange = (name, value) => {
 
 
   const Login=useGoogleLogin({
-    onSuccess:(codeResp)=>console.log(codeResp),
+    onSuccess:(codeResp)=>GetUserProfile(codeResp),
     onError:(error)=>console.log(error)
   })
  const OnGenerateTrips = async () => {
@@ -81,6 +82,19 @@ const handleInputChange = (name, value) => {
   }
 };
 
+const GetUserProfile = (tokenInfo) => {
+  axios.get(
+    `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,
+    {
+      headers: {
+        Authorization: `Bearer ${tokenInfo?.access_token}`,
+        Accept: 'application/json'
+      }
+    }
+  ).then((resp) => {
+    console.log(resp);
+  });
+}
   const handleSearch = async (e) => {
     const value = e.target.value;
     setQuery(value);
