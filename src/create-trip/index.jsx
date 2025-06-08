@@ -3,11 +3,20 @@ import { budgetOptions, travelWithOptions,activityOptions, AI_PROMPT } from "../
 import { Button } from '../components/ui/button';
 import { toast } from 'sonner';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog"
+import { FcGoogle } from "react-icons/fc";
+import { useGoogleLogin } from '@react-oauth/google';
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_GEMINI_AI_API_KEY);
   const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash', // Changed from gemini-1.5-pro
+    model: 'gemini-1.5-flash', 
     generationConfig: { responseMimeType: 'application/json' }
   });
   
@@ -20,6 +29,7 @@ function CreateTrip() {
    const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const[formData,setFormData]=useState([]);
+  const [openDailog,setOpenDialog]=useState(false);
 const handleInputChange = (name, value) => {
 
     setFormData({
@@ -33,7 +43,18 @@ const handleInputChange = (name, value) => {
     console.log('FormData:', formData);
 
   },[formData])
+
+
+  const Login=useGoogleLogin({
+    onSuccess:(codeResp)=>console.log(codeResp),
+    onError:(error)=>console.log(error)
+  })
  const OnGenerateTrips = async () => {
+  const user= localStorage.getItem('user');
+  if (!user){
+    setOpenDialog(true)
+    return ;
+  }
   try {
     if (!formData?.location || !formData?.traveler || !formData?.budget || !formData?.numbofdays) {
       toast("Please fill all details");
@@ -165,6 +186,22 @@ className={`p-4 border cursor-pointer rounded-lg hover:shadow ${formData?.travel
 <div className='my-10 justiify-end flex '>
   <Button onClick={OnGenerateTrips}>Generate Trip </Button>
 </div>
+<Dialog open={openDailog}>
+
+  <DialogContent>
+    <DialogHeader>
+      <DialogDescription>
+       <img src="/logo.svg"/>
+       <h2 className="font-bold text-lg mt-7"> Sign in with Google</h2>
+       <p> Sign in to the App with Google Authentication securely</p>
+       <Button onClick={Login}
+       
+       className="w-full mt-5 flex gap-4 items-center"><FcGoogle className="h-7 w-7"/>
+ Sign in with Google </Button>
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
 </div>
     </div>
   )
