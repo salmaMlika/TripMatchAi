@@ -1,12 +1,22 @@
-# React + Vite
+# 🗺️ TripMatch – AI Travel Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TripMatch est une application web intelligente qui aide les utilisateurs à planifier leurs voyages en fonction de leurs préférences. Elle s’appuie sur une intelligence artificielle (Gemini AI) pour proposer des destinations personnalisées. 
 
-Currently, two official plugins are available:
+## 🚀 Fonctionnalités
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✈️ Suggestion de destinations via une API IA (Gemini AI)
+- 🔐 Authentification via Google oAUth
+- 🧭 Interface interactive développée en React + Tailwind CSS
+- 📦 Base de données Firestore pour la persistance des données
+- 🧠 Prise en compte des préférences (budget, type d’activité, style de voyage…)
 
-## Expanding the ESLint configuration
+## 🛠️ Technologies utilisées
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend** : React, Tailwind CSS
+- **Backend/IA** : Gemini AI API (Google Generative AI)
+- **Base de données** : Firebase Firestore
+- **Authentification** : Google OAuth
+- **Déploiement local** : Vite.js
+
+
+
